@@ -1,0 +1,41 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "PacketGenerator/1.0.0": {
+        "dependencies": {
+          "Google.Protobuf": "3.24.2"
+        },
+        "runtime": {
+          "PacketGenerator.dll": {}
+        }
+      },
+      "Google.Protobuf/3.24.2": {
+        "runtime": {
+          "lib/net5.0/Google.Protobuf.dll": {
+            "assemblyVersion": "3.24.2.0",
+            "fileVersion": "3.24.2.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "PacketGenerator/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Google.Protobuf/3.24.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rRtOCyoi3wdfCSvDbOs1qpk7s+2t2VsjFDzZGKVrqYnCn/R+msdcrmp9hHqnf5epMjOO/l0WncwnRcVnIdaV2g==",
+      "path": "google.protobuf/3.24.2",
+      "hashPath": "google.protobuf.3.24.2.nupkg.sha512"
+    }
+  }
+}
