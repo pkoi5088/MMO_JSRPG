@@ -15,6 +15,12 @@ enum MsgId {
   S_SKILL = 7;
   S_CHANGE_HP = 8;
   S_DIE = 9;
+  S_CONNECTED = 10;
+  C_LOGIN = 11;
+  S_LOGIN = 12;
+  C_ENTER_GAME = 13;
+  C_CREATE_PLAYER = 14;
+  S_CREATE_PLAYER = 15;
 }
 
 enum CreatureState{
@@ -42,6 +48,12 @@ enum SkillType{
   SKILL_NONE = 0;
   SKILL_AUTO = 1;
   SKILL_PROJECTILE = 2;
+}
+
+enum PlayerServerState{
+  SERVER_STATE_LOGIN = 0;
+  SERVER_STATE_LOBBY = 1;
+  SERVER_STATE_GAME = 2;
 }
 
 message S_EnterGame {
@@ -85,6 +97,36 @@ message S_ChangeHp{
 message S_Die{
   int32 objectId = 1;
   int32 attackId = 2;
+}
+
+message S_Connected {
+
+}
+
+message C_Login {
+  string uniqueId = 1;
+}
+
+message S_Login {
+  int32 loginOk = 1;
+  repeated LobbyPlayerInfo players = 2;
+}
+
+message C_CreatePlayer{
+  string name = 1;
+}
+
+message S_CreatePlayer{
+  LobbyPlayerInfo player = 1;
+}
+
+message C_EnterGame{
+  string name = 1;
+}
+
+message LobbyPlayerInfo{
+  string name = 1;
+  StatInfo statInfo = 2;
 }
 
 message ObjectInfo{
