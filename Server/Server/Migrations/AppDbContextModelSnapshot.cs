@@ -52,9 +52,27 @@ namespace Server.Migrations
                     b.Property<int>("AccountDbId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Attack")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Hp")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxHp")
+                        .HasColumnType("int");
+
                     b.Property<string>("PlayerName")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<float>("Speed")
+                        .HasColumnType("real");
+
+                    b.Property<int>("TotalExp")
+                        .HasColumnType("int");
 
                     b.HasKey("PlayerDbId");
 
