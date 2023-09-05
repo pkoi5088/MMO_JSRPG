@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf;
 using Google.Protobuf.Protocol;
 using Server;
+using Server.DB;
 using Server.Game;
 using ServerCore;
 using System;
@@ -43,5 +44,41 @@ class PacketHandler
             return;
 
         room.Push(room.HandleSkill, player, skillPacket);
+    }
+
+    public static void C_LoginHandler(PacketSession session, IMessage packet)
+    {
+        C_Login loginPacket = packet as C_Login;
+        ClientSession clientSession = session as ClientSession;
+
+        Console.WriteLine($"UniqueId({loginPacket.UniqueId}");
+
+        // TODO: 보안체크
+
+        // TODO: 문제가 있긴 있다.
+        // 1. 동시에 다른 사람이 같은 UniqueId를 보낸다면?
+        // 2. 악의적으로 여러번 보낸다면
+        // 3. 뜬금없는 타이밍에 그냥 이 패킷을 보낸다면?
+
+        using(AppDbContext db = new AppDbContext())
+        {
+            AccountDb findAccount = db.Accounts
+                .Where(a => a.AccountName == loginPacket.UniqueId).FirstOrDefault();
+
+            if (findAccount != null)
+            {
+                S_Login loginOk = new S_Login() { LoginOk = 1 };
+                clientSession.Send(loginOk);
+            }
+            else
+            {
+                AccountDb newAccount = new AccountDb { AccountName = loginPacket.UniqueId };
+                db.Accounts.Add(newAccount);
+                db.SaveChanges();
+
+                S_Login loginOk = new S_Login() { LoginOk = 1 };
+                clientSession.Send(loginOk);
+            }
+        }
     }
 }
