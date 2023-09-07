@@ -117,7 +117,7 @@ class PacketHandler
         Debug.Log($"LoginOk({loginPacket.LoginOk})");
 
         // TODO: 로비 UI에서 캐릭터 보여주고, 선택할 수 있도록
-        if(loginPacket == null||loginPacket.Players.Count == 0)
+        if (loginPacket == null || loginPacket.Players.Count == 0)
         {
             C_CreatePlayer createPacket = new C_CreatePlayer();
             createPacket.Name = $"Player_{Random.Range(0, 10000).ToString("0000")}";
@@ -148,6 +148,16 @@ class PacketHandler
             C_EnterGame enterGamePacket = new C_EnterGame();
             enterGamePacket.Name = createOkPacket.Player.Name;
             Managers.Network.Send(enterGamePacket);
+        }
+    }
+
+    public static void S_ItemListHandler(PacketSession session, IMessage packet)
+    {
+        S_ItemList itemList = packet as S_ItemList;
+
+        foreach (var item in itemList.Items)
+        {
+            Debug.Log($"{item.TemplateId}: {item.Count}");
         }
     }
 }

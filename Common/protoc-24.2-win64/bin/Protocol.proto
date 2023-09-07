@@ -21,6 +21,7 @@ enum MsgId {
   C_ENTER_GAME = 13;
   C_CREATE_PLAYER = 14;
   S_CREATE_PLAYER = 15;
+  S_ITEM_LIST = 16;
 }
 
 enum CreatureState{
@@ -54,6 +55,31 @@ enum PlayerServerState{
   SERVER_STATE_LOGIN = 0;
   SERVER_STATE_LOBBY = 1;
   SERVER_STATE_GAME = 2;
+}
+
+enum ItemType{
+  ITEM_TYPE_NONE = 0;
+  ITEM_TYPE_WEAPON = 1;
+  ITEM_TYPE_ARMOR = 2;
+  ITEM_TYPE_CONSUMABLE = 3;
+}
+
+enum WeaponType{
+  WEAPON_TYPE_NONE = 0;
+  WEAPON_TYPE_SWORD = 1;
+  WEAPON_TYPE_BOW = 2;
+}
+
+enum ArmorType{
+  ARMOR_TYPE_NONE = 0;
+  ARMOR_TYPE_HELMET = 1;
+  ARMOR_TYPE_ARMOR = 2;
+  ARMOR_TYPE_BOOTS = 3;
+}
+
+enum ConsumableType{
+  CONSUMABLE_TYPE_NONE = 0;
+  CONSUMABLE_TYPE_POTION = 1;
 }
 
 message S_EnterGame {
@@ -124,6 +150,10 @@ message C_EnterGame{
   string name = 1;
 }
 
+message S_ItemList{
+  repeated ItemInfo items = 1;
+}
+
 message LobbyPlayerInfo{
   int32 playerDbId = 1;
   string name = 2;
@@ -155,4 +185,11 @@ message StatInfo{
 
 message SkillInfo{
   int32 skillId = 1;
+}
+
+message ItemInfo{
+  int32 itemDbId = 1;
+  int32 templateId = 2;
+  int32 count = 3;
+  int32 slot = 4;
 }
