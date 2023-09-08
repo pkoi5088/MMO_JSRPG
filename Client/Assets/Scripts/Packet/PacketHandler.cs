@@ -155,7 +155,7 @@ class PacketHandler
     {
         S_ItemList itemList = packet as S_ItemList;
 
-        foreach (var item in itemList.Items)
+        foreach (ItemInfo item in itemList.Items)
         {
             Debug.Log($"{item.TemplateId}: {item.Count}");
         }
