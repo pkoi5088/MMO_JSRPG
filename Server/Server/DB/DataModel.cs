@@ -38,7 +38,7 @@ namespace Server.DB
     [Table("Item")]
     public class ItemDb
     {
-        public int ItemDbid { get; set; }
+        public int ItemDbId { get; set; }
         public int TemplateId { get; set; }
         public int Count { get; set; }
         public int Slot { get; set; }

@@ -1,8 +1,8 @@
+using Data;
 using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 
 public class Item
@@ -27,6 +27,12 @@ public class Item
         set { Info.Count = value; }
     }
 
+    public int Slot
+    {
+        get { return Info.Slot; }
+        set { Info.Slot = value; }
+    }
+
     public ItemType ItemType { get; private set; }
     public bool Stackable { get; protected set; }
 
@@ -35,12 +41,12 @@ public class Item
         ItemType = itemtype;
     }
 
-    public static Item MakeItem(ItemDb itemDb)
+    public static Item MakeItem(ItemInfo itemInfo)
     {
         Item item = null;
 
         ItemData itemData = null;
-        DataManager.ItemDict.TryGetValue(itemDb.TemplateId, out itemData);
+        Managers.Data.ItemDict.TryGetValue(itemInfo.TemplateId, out itemData);
 
         if (itemData == null)
             return null;
@@ -48,20 +54,21 @@ public class Item
         switch (itemData.itemType)
         {
             case ItemType.Weapon:
-                item = new Weapon(itemDb.TemplateId);
+                item = new Weapon(itemInfo.TemplateId);
                 break;
             case ItemType.Armor:
-                item = new Armor(itemDb.TemplateId);
+                item = new Armor(itemInfo.TemplateId);
                 break;
             case ItemType.Consumable:
-                item = new Consumable(itemDb.TemplateId);
+                item = new Consumable(itemInfo.TemplateId);
                 break;
         }
 
         if (item != null)
         {
-            item.ItemDbId = itemDb.ItemDbid;
-            item.Count = itemDb.Count;
+            item.ItemDbId = itemInfo.ItemDbId;
+            item.Count = itemInfo.Count;
+            item.Slot = itemInfo.Slot;
         }
 
         return item;
@@ -81,7 +88,7 @@ public class Weapon : Item
     void Init(int templateId)
     {
         ItemData itemData = null;
-        DataManager.ItemDict.TryGetValue(templateId, out itemData);
+        Managers.Data.ItemDict.TryGetValue(templateId, out itemData);
         if (itemData.itemType != ItemType.Weapon)
             return;
 
@@ -109,7 +116,7 @@ public class Armor : Item
     void Init(int templateId)
     {
         ItemData itemData = null;
-        DataManager.ItemDict.TryGetValue(templateId, out itemData);
+        Managers.Data.ItemDict.TryGetValue(templateId, out itemData);
         if (itemData.itemType != ItemType.Armor)
             return;
 
@@ -137,7 +144,7 @@ public class Consumable : Item
     void Init(int templateId)
     {
         ItemData itemData = null;
-        DataManager.ItemDict.TryGetValue(templateId, out itemData);
+        Managers.Data.ItemDict.TryGetValue(templateId, out itemData);
         if (itemData.itemType != ItemType.Consumable)
             return;
 
