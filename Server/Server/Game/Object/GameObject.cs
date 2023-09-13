@@ -22,6 +22,9 @@ namespace Server.Game
         public PositionInfo PosInfo { get; private set; } = new PositionInfo();
         public StatInfo Stat { get; private set; } = new StatInfo();
 
+        public virtual int TotalAttack { get { return Stat.Attack; } }
+        public virtual int TotalDefence { get { return 0; } }
+
         public float Speed
         {
             get { return Stat.Speed; }
@@ -116,6 +119,7 @@ namespace Server.Game
             if (Room == null)
                 return;
 
+            damage = Math.Max(damage - TotalDefence, 0);
             Stat.Hp = Math.Max(Stat.Hp - damage, 0);
 
             S_ChangeHp changePacket = new S_ChangeHp();

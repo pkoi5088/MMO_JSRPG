@@ -155,9 +155,6 @@ class PacketHandler
     {
         S_ItemList itemList = packet as S_ItemList;
 
-        //UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
-        //UI_Inventory invenUI = gameSceneUI.InvenUI;
-
         Managers.Inven.Clear();
 
         // 메모리에 아이템 정보 적용
@@ -167,8 +164,8 @@ class PacketHandler
             Managers.Inven.Add(item);
         }
 
-        //invenUI.gameObject.SetActive(true);
-        //invenUI.RefreshUI();
+        if (Managers.Object.MyPlayer != null)
+            Managers.Object.MyPlayer.RefreshAdditionalStat();
     }
 
     public static void S_AddItemHandler(PacketSession session, IMessage packet)
@@ -187,6 +184,9 @@ class PacketHandler
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
         UI_Inventory invenUI = gameSceneUI.InvenUI;
         invenUI.RefreshUI();
+
+        if (Managers.Object.MyPlayer != null)
+            Managers.Object.MyPlayer.RefreshAdditionalStat();
     }
 
     public static void S_EquipItemHandler(PacketSession session, IMessage packet)
@@ -204,6 +204,9 @@ class PacketHandler
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
         UI_Inventory invenUI = gameSceneUI.InvenUI;
         invenUI.RefreshUI();
+
+        if (Managers.Object.MyPlayer != null)
+            Managers.Object.MyPlayer.RefreshAdditionalStat();
     }
 
     public static void S_ChangeStatHandler(PacketSession session, IMessage packet)

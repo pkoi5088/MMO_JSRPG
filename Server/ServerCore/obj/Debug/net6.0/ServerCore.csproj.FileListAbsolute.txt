@@ -13,7 +13,6 @@ C:\Users\Seoki\Desktop\Server\Server\ServerCore\obj\Debug\net6.0\ref\ServerCore.
 C:\Users\Seoki\Desktop\MMO_Game\Server\ServerCore\bin\Debug\net6.0\ServerCore.deps.json
 C:\Users\Seoki\Desktop\MMO_Game\Server\ServerCore\bin\Debug\net6.0\ServerCore.dll
 C:\Users\Seoki\Desktop\MMO_Game\Server\ServerCore\bin\Debug\net6.0\ServerCore.pdb
-C:\Users\Seoki\Desktop\MMO_Game\Server\ServerCore\obj\Debug\net6.0\ServerCore.csproj.AssemblyReference.cache
 C:\Users\Seoki\Desktop\MMO_Game\Server\ServerCore\obj\Debug\net6.0\ServerCore.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Seoki\Desktop\MMO_Game\Server\ServerCore\obj\Debug\net6.0\ServerCore.AssemblyInfoInputs.cache
 C:\Users\Seoki\Desktop\MMO_Game\Server\ServerCore\obj\Debug\net6.0\ServerCore.AssemblyInfo.cs
