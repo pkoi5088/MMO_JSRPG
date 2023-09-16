@@ -37,7 +37,7 @@ namespace Server.Game
             resMovePacket.ObjectId = player.Info.ObjectId;
             resMovePacket.PosInfo = movePacket.PosInfo;
 
-            Broadcast(resMovePacket);
+            Broadcast(player.CellPos, resMovePacket);
 
         }
 
@@ -55,7 +55,7 @@ namespace Server.Game
             S_Skill skill = new S_Skill() { Info = new SkillInfo() };
             skill.ObjectId = info.ObjectId;
             skill.Info.SkillId = skillPacket.Info.SkillId;
-            Broadcast(skill);
+            Broadcast(player.CellPos, skill);
 
             Data.Skill skillData = null;
             if (DataManager.SkillDict.TryGetValue(skillPacket.Info.SkillId, out skillData) == false)

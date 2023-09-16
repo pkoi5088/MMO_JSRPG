@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Server.Game
 {
@@ -26,11 +24,12 @@ namespace Server.Game
         public GameRoom Add(int mapId)
         {
             GameRoom gameRoom = new GameRoom();
-            gameRoom.Push(gameRoom.Init, mapId);
+            gameRoom.Push(gameRoom.Init, mapId, 10);
 
             gameRoom.RoomId = _roomId;
             _rooms.Add(_roomId, gameRoom);
             _roomId++;
+
             return gameRoom;
         }
 
@@ -44,6 +43,7 @@ namespace Server.Game
             GameRoom room = null;
             if (_rooms.TryGetValue(roomId, out room))
                 return room;
+
             return null;
         }
     }
