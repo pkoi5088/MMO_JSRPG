@@ -106,7 +106,7 @@ namespace Server.Game
                 return;
             }
 
-            List<Vector2Int> path = Room.Map.FindPath(CellPos, _target.CellPos, checkObjects: false);
+            List<Vector2Int> path = Room.Map.FindPath(CellPos, _target.CellPos, checkObjects: true);
             if (path.Count < 2 || path.Count > _chaseCellDist)
             {
                 _target = null;

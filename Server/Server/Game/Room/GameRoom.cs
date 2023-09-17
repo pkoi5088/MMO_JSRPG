@@ -54,9 +54,12 @@ namespace Server.Game
             }
 
             // TEMP
-            Monster monster = ObjectManager.Instance.Add<Monster>();
-            monster.Init(1);
-            EnterGame(monster, randomPos: true);
+            for(int i = 0; i < 500; ++i)
+            {
+                Monster monster = ObjectManager.Instance.Add<Monster>();
+                monster.Init(1);
+                EnterGame(monster, randomPos: true);
+            }
         }
 
         public void Update()
@@ -75,8 +78,8 @@ namespace Server.Game
                 Vector2Int respawnPos;
                 while (true)
                 {
-                    respawnPos.x = _rand.Next(-5, 6);
-                    respawnPos.y = _rand.Next(-5, 6);
+                    respawnPos.x = _rand.Next(Map.MinX, Map.MaxX + 1);
+                    respawnPos.y = _rand.Next(Map.MinY, Map.MaxY + 1);
                     if (Map.Find(respawnPos) == null)
                     {
                         gameObject.CellPos = respawnPos;
