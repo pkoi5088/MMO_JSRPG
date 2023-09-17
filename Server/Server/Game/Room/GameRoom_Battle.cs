@@ -88,7 +88,7 @@ namespace Server.Game
                         arrow.PosInfo.PosX = player.PosInfo.PosX;
                         arrow.PosInfo.PosY = player.PosInfo.PosY;
                         arrow.Stat.Speed = skillData.projectile.speed;
-                        Push(EnterGame, arrow);
+                        Push(EnterGame, arrow, false);
                     }
                     break;
 

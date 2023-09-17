@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Google.Protobuf.Protocol;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +14,8 @@ namespace Server.Game
         public int IndexX { get; private set; }
 
         public HashSet<Player> Players { get; set; } = new HashSet<Player>();
+        public HashSet<Monster> Monsters { get; set; } = new HashSet<Monster>();
+        public HashSet<Projectile> Projectiles { get; set; } = new HashSet<Projectile>();
 
         public Zone(int y, int x)
         {
@@ -19,7 +23,25 @@ namespace Server.Game
             IndexX = x;
         }
 
-        public Player FindOne(Func<Player, bool> condition)
+        public void Remove(GameObject gameObject)
+        {
+            GameObjectType type = ObjectManager.GetObjectTypeById(gameObject.Id);
+
+            switch (type)
+            {
+                case GameObjectType.Player:
+                    Players.Remove((Player)gameObject);
+                    break;
+                case GameObjectType.Monster:
+                    Monsters.Remove((Monster)gameObject);
+                    break;
+                case GameObjectType.Projectile:
+                    Projectiles.Remove((Projectile)gameObject);
+                    break;
+            }
+        }
+
+        public Player FindOnePlayer(Func<Player, bool> condition)
         {
             foreach (Player player in Players)
             {
@@ -30,7 +52,7 @@ namespace Server.Game
             return null;
         }
 
-        public List<Player> FindAll(Func<Player, bool> condition)
+        public List<Player> FindAllPlayers(Func<Player, bool> condition)
         {
             List<Player> findList = new List<Player>();
 

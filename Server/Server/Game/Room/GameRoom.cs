@@ -4,15 +4,14 @@ using Server.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Server.Game
 {
     public partial class GameRoom : JobSerializer
     {
+        public const int VisionCells = 5;
+
         public int RoomId { get; set; }
 
         Dictionary<int, Player> _players = new Dictionary<int, Player>();
@@ -27,7 +26,7 @@ namespace Server.Game
         public Zone GetZone(Vector2Int cellPos)
         {
             int x = (cellPos.x - Map.MinX) / ZoneCells;
-            int y = (Map.MaxX - cellPos.y) / ZoneCells;
+            int y = (Map.MaxY - cellPos.y) / ZoneCells;
 
             if (x < 0 || x >= Zones.GetLength(1))
                 return null;
@@ -57,8 +56,7 @@ namespace Server.Game
             // TEMP
             Monster monster = ObjectManager.Instance.Add<Monster>();
             monster.Init(1);
-            monster.CellPos = new Vector2Int(5, 5);
-            EnterGame(monster);
+            EnterGame(monster, randomPos: true);
         }
 
         public void Update()
@@ -66,10 +64,26 @@ namespace Server.Game
             Flush();
         }
 
-        public void EnterGame(GameObject gameObject)
+        Random _rand = new Random();
+        public void EnterGame(GameObject gameObject, bool randomPos)
         {
             if (gameObject == null)
                 return;
+
+            if (randomPos)
+            {
+                Vector2Int respawnPos;
+                while (true)
+                {
+                    respawnPos.x = _rand.Next(-5, 6);
+                    respawnPos.y = _rand.Next(-5, 6);
+                    if (Map.Find(respawnPos) == null)
+                    {
+                        gameObject.CellPos = respawnPos;
+                        break;
+                    }
+                }
+            }
 
             GameObjectType type = ObjectManager.GetObjectTypeById(gameObject.Id);
 
@@ -84,26 +98,13 @@ namespace Server.Game
                 Map.ApplyMove(player, new Vector2Int(player.CellPos.x, player.CellPos.y));
                 GetZone(player.CellPos).Players.Add(player);
 
-                // 본인에게 정보 전송
+                // 본인한테 정보 전송
                 {
                     S_EnterGame enterPacket = new S_EnterGame();
                     enterPacket.Player = player.Info;
                     player.Session.Send(enterPacket);
 
-                    S_Spawn spawnPacket = new S_Spawn();
-                    foreach (Player p in _players.Values)
-                    {
-                        if (player != p)
-                            spawnPacket.Objects.Add(p.Info);
-                    }
-
-                    foreach (Monster m in _monsters.Values)
-                        spawnPacket.Objects.Add(m.Info);
-
-                    foreach (Projectile p in _projectiles.Values)
-                        spawnPacket.Objects.Add(p.Info);
-
-                    player.Session.Send(spawnPacket);
+                    player.Vision.Update();
                 }
             }
             else if (type == GameObjectType.Monster)
@@ -112,6 +113,7 @@ namespace Server.Game
                 _monsters.Add(gameObject.Id, monster);
                 monster.Room = this;
 
+                GetZone(monster.CellPos).Monsters.Add(monster);
                 Map.ApplyMove(monster, new Vector2Int(monster.CellPos.x, monster.CellPos.y));
 
                 monster.Update();
@@ -122,18 +124,15 @@ namespace Server.Game
                 _projectiles.Add(gameObject.Id, projectile);
                 projectile.Room = this;
 
+                GetZone(projectile.CellPos).Projectiles.Add(projectile);
                 projectile.Update();
             }
 
-            // 타인에게 정보 전송
+            // 타인한테 정보 전송
             {
                 S_Spawn spawnPacket = new S_Spawn();
                 spawnPacket.Objects.Add(gameObject.Info);
-                foreach (Player p in _players.Values)
-                {
-                    if (p.Id != gameObject.Id)
-                        p.Session.Send(spawnPacket);
-                }
+                Broadcast(gameObject.CellPos, spawnPacket);
             }
         }
 
@@ -141,19 +140,21 @@ namespace Server.Game
         {
             GameObjectType type = ObjectManager.GetObjectTypeById(objectId);
 
+            Vector2Int cellPos;
+
             if (type == GameObjectType.Player)
             {
                 Player player = null;
                 if (_players.Remove(objectId, out player) == false)
                     return;
 
-                GetZone(player.CellPos).Players.Remove(player);
+                cellPos = player.CellPos;
 
                 player.OnLeaveGame();
                 Map.ApplyLeave(player);
                 player.Room = null;
 
-                // 본인에게 정보 전송
+                // 본인한테 정보 전송
                 {
                     S_LeaveGame leavePacket = new S_LeaveGame();
                     player.Session.Send(leavePacket);
@@ -165,6 +166,7 @@ namespace Server.Game
                 if (_monsters.Remove(objectId, out monster) == false)
                     return;
 
+                cellPos = monster.CellPos;
                 Map.ApplyLeave(monster);
                 monster.Room = null;
             }
@@ -174,23 +176,23 @@ namespace Server.Game
                 if (_projectiles.Remove(objectId, out projectile) == false)
                     return;
 
+                cellPos = projectile.CellPos;
+                Map.ApplyLeave(projectile);
                 projectile.Room = null;
             }
+            else
+            {
+                return;
+            }
 
-            // 타인에게 정보 전송
+            // 타인한테 정보 전송
             {
                 S_Despawn despawnPacket = new S_Despawn();
                 despawnPacket.ObjectIds.Add(objectId);
-                foreach (Player p in _players.Values)
-                {
-                    if (p.Id != objectId)
-                        p.Session.Send(despawnPacket);
-                }
-
+                Broadcast(cellPos, despawnPacket);
             }
         }
 
-        // TODO
         public Player FindPlayer(Func<GameObject, bool> condition)
         {
             foreach (Player player in _players.Values)
@@ -208,11 +210,18 @@ namespace Server.Game
 
             foreach (Player p in zones.SelectMany(z => z.Players))
             {
+                int dx = p.CellPos.x - pos.x;
+                int dy = p.CellPos.y - pos.y;
+                if (Math.Abs(dx) > GameRoom.VisionCells)
+                    continue;
+                if (Math.Abs(dy) > GameRoom.VisionCells)
+                    continue;
+
                 p.Session.Send(packet);
             }
         }
 
-        public List<Zone> GetAdjacentZones(Vector2Int cellPos, int cells = 5)
+        public List<Zone> GetAdjacentZones(Vector2Int cellPos, int cells = GameRoom.VisionCells)
         {
             HashSet<Zone> zones = new HashSet<Zone>();
 
@@ -226,9 +235,11 @@ namespace Server.Game
                     Zone zone = GetZone(new Vector2Int(x, y));
                     if (zone == null)
                         continue;
+
                     zones.Add(zone);
                 }
             }
+
             return zones.ToList();
         }
     }

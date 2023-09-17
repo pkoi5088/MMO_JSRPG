@@ -140,7 +140,7 @@ namespace Server
             GameLogic.Instance.Push(() =>
             {
                 GameRoom insertRoom = GameLogic.Instance.Find(1);
-                insertRoom.Push(insertRoom.EnterGame, MyPlayer);
+                insertRoom.Push(insertRoom.EnterGame, MyPlayer, true);
             });
 
         }

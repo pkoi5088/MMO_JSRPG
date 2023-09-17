@@ -2,10 +2,8 @@
 using ServerCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
+using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Server.Game
 {
@@ -15,7 +13,7 @@ namespace Server.Game
         public int Y;
         public int X;
 
-        public static bool operator==(Pos lhs,Pos rhs)
+        public static bool operator ==(Pos lhs, Pos rhs)
         {
             return lhs.Y == rhs.Y && lhs.X == rhs.X;
         }
@@ -128,11 +126,15 @@ namespace Server.Game
             if (gameObject.Room.Map != this)
                 return false;
 
-            PositionInfo posInfo = gameObject.Info.PosInfo;
+            PositionInfo posInfo = gameObject.PosInfo;
             if (posInfo.PosX < MinX || posInfo.PosX > MaxX)
                 return false;
             if (posInfo.PosY < MinY || posInfo.PosY > MaxY)
                 return false;
+
+            // Zone
+            Zone zone = gameObject.Room.GetZone(gameObject.CellPos);
+            zone.Remove(gameObject);
 
             {
                 int x = posInfo.PosX - MinX;
@@ -144,42 +146,71 @@ namespace Server.Game
             return true;
         }
 
-        public bool ApplyMove(GameObject gameObject, Vector2Int dest)
+        public bool ApplyMove(GameObject gameObject, Vector2Int dest, bool checkObjects = true, bool collision = true)
         {
-            ApplyLeave(gameObject);
-
             if (gameObject.Room == null)
                 return false;
             if (gameObject.Room.Map != this)
                 return false;
 
-            PositionInfo posInfo = gameObject.Info.PosInfo;
-            if (CanGo(dest, true) == false)
+            PositionInfo posInfo = gameObject.PosInfo;
+            if (CanGo(dest, checkObjects) == false)
                 return false;
 
+            if (collision)
             {
-                int x = dest.x - MinX;
-                int y = MaxY - dest.y;
-                _objects[y, x] = gameObject;
+                {
+                    int x = posInfo.PosX - MinX;
+                    int y = MaxY - posInfo.PosY;
+                    if (_objects[y, x] == gameObject)
+                        _objects[y, x] = null;
+                }
+                {
+                    int x = dest.x - MinX;
+                    int y = MaxY - dest.y;
+                    _objects[y, x] = gameObject;
+                }
             }
 
-            Player p = gameObject as Player;
-            if (p != null)
+            // Zone
+            GameObjectType type = ObjectManager.GetObjectTypeById(gameObject.Id);
+            if (type == GameObjectType.Player)
             {
+                Player player = (Player)gameObject;
                 Zone now = gameObject.Room.GetZone(gameObject.CellPos);
                 Zone after = gameObject.Room.GetZone(dest);
                 if (now != after)
                 {
-                    if (now != null)
-                        now.Players.Remove(p);
-                    if (after != null)
-                        after.Players.Add(p);
+                    now.Players.Remove(player);
+                    after.Players.Add(player);
+                }
+            }
+            else if (type == GameObjectType.Monster)
+            {
+                Monster monster = (Monster)gameObject;
+                Zone now = gameObject.Room.GetZone(gameObject.CellPos);
+                Zone after = gameObject.Room.GetZone(dest);
+                if (now != after)
+                {
+                    now.Monsters.Remove(monster);
+                    after.Monsters.Add(monster);
+                }
+            }
+            else if (type == GameObjectType.Projectile)
+            {
+                Projectile projectile = (Projectile)gameObject;
+                Zone now = gameObject.Room.GetZone(gameObject.CellPos);
+                Zone after = gameObject.Room.GetZone(dest);
+                if (now != after)
+                {
+                    now.Projectiles.Remove(projectile);
+                    after.Projectiles.Add(projectile);
                 }
             }
 
+            // 실제 좌표 이동
             posInfo.PosX = dest.x;
             posInfo.PosY = dest.y;
-
             return true;
         }
 
@@ -255,13 +286,13 @@ namespace Server.Game
                 // 제일 좋은 후보를 찾는다
                 PQNode pqNode = pq.Pop();
                 Pos node = new Pos(pqNode.Y, pqNode.X);
-
                 // 동일한 좌표를 여러 경로로 찾아서, 더 빠른 경로로 인해서 이미 방문(closed)된 경우 스킵
                 if (closeList.Contains(node))
                     continue;
 
                 // 방문한다
                 closeList.Add(node);
+
                 // 목적지 도착했으면 바로 종료
                 if (node.Y == dest.Y && node.X == dest.X)
                     break;
@@ -309,7 +340,7 @@ namespace Server.Game
             return CalcCellPathFromParent(parent, dest);
         }
 
-        List<Vector2Int> CalcCellPathFromParent(Dictionary<Pos,Pos> parent, Pos dest)
+        List<Vector2Int> CalcCellPathFromParent(Dictionary<Pos, Pos> parent, Pos dest)
         {
             List<Vector2Int> cells = new List<Vector2Int>();
 
