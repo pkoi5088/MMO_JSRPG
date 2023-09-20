@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Cm+Vbi9hYGI+HZKY93BPa037A4KpRetESu69EYlNXBVbPsBQQXBCyQX4NLYI8mtpepcG1naNN3sIPqZpJP51mA==",
+  "dgSpecHash": "e9CwILCZL5a7pqjmMWHOnhD7EyW34VHAQvVNbmyPmAmolQlbhNB7sFIBxJzP8VZff8IXeRn/T8RsdA+FH6Zovg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Seoki\\Desktop\\MMO_Game\\Server\\DummyClient\\DummyClient.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Seoki\\.nuget\\packages\\google.protobuf\\3.24.3\\google.protobuf.3.24.3.nupkg.sha512"
+  ],
   "logs": []
 }
