@@ -1,7 +1,5 @@
 ﻿# MMO_JSRPG
-[인프런의 Rookis-C# 게임서버 강의](https://www.inflearn.com/course/%EC%9C%A0%EB%8B%88%ED%8B%B0-mmorpg-%EA%B0%9C%EB%B0%9C-part4/dashboard)를 들으며 만든 C#서버와 유니티 MMORPG 프로젝트
-
-이후 기능을 추가
+C#서버와 유니티 MMORPG 프로젝트
 
 ## 기간
 * 2023년 7월 4일 ~ 2023년 9월 3일: 클라이언트, 서버 연동
