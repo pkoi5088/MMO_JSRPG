@@ -1,13 +1,8 @@
-﻿using Server.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AccountServer.DB;
 
-namespace Server
+namespace AccountServer
 {
-    public static class Extenstions
+    public static class Extensions
     {
         public static bool SaveChangesEx(this AppDbContext db)
         {
