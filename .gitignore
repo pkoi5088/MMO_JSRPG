@@ -72,3 +72,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 *.zip
+Client/[Aa]ssets/[Rr]esources/[Tt]hirdParty/

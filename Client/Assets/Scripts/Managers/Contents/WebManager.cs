@@ -9,7 +9,7 @@ public class WebManager
 {
     public string BaseUrl { get; set; } = "https://localhost:5001/api";
 
-    public void SendPostRequest<T>(string url,object obj, Action<T> res)
+    public void SendPostRequest<T>(string url, object obj, Action<T> res)
     {
         Managers.Instance.StartCoroutine(CoSendWebRequest(url, "POST", obj, res));
     }

@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameScene : BaseScene
+public class LoginScene : BaseScene
 {
-    UI_GameScene _sceneUI;
+    UI_LoginScene _sceneUI;
 
     protected override void Init()
     {
         base.Init();
 
-        SceneType = Define.Scene.Game;
+        SceneType = Define.Scene.Login;
 
-        Managers.Map.LoadMap(1);
+        Managers.Web.BaseUrl = "https://localhost:5001/api";
 
         Screen.SetResolution(640, 480, false);
 
-        _sceneUI = Managers.UI.ShowSceneUI<UI_GameScene>();
+        _sceneUI = Managers.UI.ShowSceneUI<UI_LoginScene>();
     }
 
     public override void Clear()
