@@ -63,7 +63,7 @@ namespace SharedDB.Migrations
                     b.Property<int>("AccountDbId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("Expired")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Token")

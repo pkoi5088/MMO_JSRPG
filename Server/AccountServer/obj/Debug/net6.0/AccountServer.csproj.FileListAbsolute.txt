@@ -85,3 +85,5 @@ C:\Users\Seoki\Desktop\MMO_Game\Server\AccountServer\obj\Debug\net6.0\refint\Acc
 C:\Users\Seoki\Desktop\MMO_Game\Server\AccountServer\obj\Debug\net6.0\AccountServer.pdb
 C:\Users\Seoki\Desktop\MMO_Game\Server\AccountServer\obj\Debug\net6.0\AccountServer.genruntimeconfig.cache
 C:\Users\Seoki\Desktop\MMO_Game\Server\AccountServer\obj\Debug\net6.0\ref\AccountServer.dll
+C:\Users\Seoki\Desktop\MMO_Game\Server\AccountServer\bin\Debug\net6.0\SharedDB.dll
+C:\Users\Seoki\Desktop\MMO_Game\Server\AccountServer\bin\Debug\net6.0\SharedDB.pdb

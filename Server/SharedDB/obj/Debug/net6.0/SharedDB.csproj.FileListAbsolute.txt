@@ -1,0 +1,14 @@
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\bin\Debug\net6.0\SharedDB.deps.json
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\bin\Debug\net6.0\SharedDB.runtimeconfig.json
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\bin\Debug\net6.0\SharedDB.dll
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\bin\Debug\net6.0\SharedDB.pdb
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\obj\Debug\net6.0\SharedDB.csproj.AssemblyReference.cache
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\obj\Debug\net6.0\SharedDB.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\obj\Debug\net6.0\SharedDB.AssemblyInfoInputs.cache
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\obj\Debug\net6.0\SharedDB.AssemblyInfo.cs
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\obj\Debug\net6.0\SharedDB.csproj.CoreCompileInputs.cache
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\obj\Debug\net6.0\SharedDB.dll
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\obj\Debug\net6.0\refint\SharedDB.dll
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\obj\Debug\net6.0\SharedDB.pdb
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\obj\Debug\net6.0\SharedDB.genruntimeconfig.cache
+C:\Users\Seoki\Desktop\MMO_Game\Server\SharedDB\obj\Debug\net6.0\ref\SharedDB.dll
