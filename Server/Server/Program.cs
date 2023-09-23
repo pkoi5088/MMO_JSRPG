@@ -88,7 +88,7 @@ namespace Server
             t.Start();
         }
 
-        public static string Name { get; } = "아메리카노";
+        public static string Name { get; } = "Americano";
         public static int Port { get; } = 7777;
         public static string IpAddress { get; set; }
 
