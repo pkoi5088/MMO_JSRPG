@@ -6,6 +6,8 @@ using static Define;
 
 public class MonsterController : CreatureController
 {
+	public int TemplateId { get; set; } = 1;
+
 	protected override void Init()
 	{
 		base.Init();
@@ -35,6 +37,21 @@ public class MonsterController : CreatureController
         if (_animator == null || _sprite == null)
             return;
 
-        _animator.Play("Skull_ghost");
+		if (TemplateId == 1)
+		{
+			_animator.Play("Skull_ghost");
+		}else if(TemplateId == 2)
+        {
+            _animator.Play("Walk");
+            switch (Dir)
+            {
+                case MoveDir.Left:
+                    _sprite.flipX = false;
+                    break;
+                case MoveDir.Right:
+                    _sprite.flipX = true;
+                    break;
+            }
+        }
     }
 }

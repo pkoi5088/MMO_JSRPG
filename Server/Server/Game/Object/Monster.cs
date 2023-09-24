@@ -13,7 +13,17 @@ namespace Server.Game
 {
     public class Monster: GameObject
     {
-        public int TemplateId { get; private set; }
+        public int TemplateId
+        {
+            get
+            {
+                return Info.TemplateId;
+            }
+            private set
+            {
+                Info.TemplateId = value;
+            }
+        }
 
         public Monster()
         {

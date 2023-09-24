@@ -59,10 +59,17 @@ namespace Server.Game
             }
 
             // TEMP
-            for(int i = 0; i < 2; ++i)
+            for (int i = 0; i < 5; ++i)
             {
                 Monster monster = ObjectManager.Instance.Add<Monster>();
                 monster.Init(1);
+                EnterGame(monster, randomPos: true);
+            }
+
+            for (int i = 0; i < 5; ++i)
+            {
+                Monster monster = ObjectManager.Instance.Add<Monster>();
+                monster.Init(2);
                 EnterGame(monster, randomPos: true);
             }
         }
