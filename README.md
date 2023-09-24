@@ -58,3 +58,7 @@ ASP.NET Core로 로그인, 회원가입을 위한 서버를 구축, 로그인에
 <p align="center"><img src="https://velog.velcdn.com/images/pkoi5088/post/c156538d-7bb5-4d14-9afa-3017cc4c4a06/image.png" width="100%" height="100%"></p>
 
 <p align="center"><img src="https://velog.velcdn.com/images/pkoi5088/post/f82e48c2-564c-4d8e-82e1-22ad3b453445/image.png" width="100%" height="100%"></p>
+
+<p align="center"><img src="https://velog.velcdn.com/images/pkoi5088/post/b286ad12-deab-4cd8-91de-0ef91d292e85/image.png" width="100%" height="50%"></p>
+
+<p align="center"><img src="https://velog.velcdn.com/images/pkoi5088/post/699a1265-0c83-46e3-b0ed-5d0f071f236e/image.png" width="1000%" height="50%"></p>
