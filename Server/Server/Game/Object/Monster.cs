@@ -13,7 +13,17 @@ namespace Server.Game
 {
     public class Monster: GameObject
     {
-        public int TemplateId { get; private set; }
+        public int TemplateId
+        {
+            get
+            {
+                return Info.TemplateId;
+            }
+            private set
+            {
+                Info.TemplateId = value;
+            }
+        }
 
         public Monster()
         {
@@ -108,14 +118,6 @@ namespace Server.Game
                 _target = null;
                 State = CreatureState.Idle;
                 BroadcastMove();
-                return;
-            }
-
-            // 스킬로 넘어갈지 체크
-            if (dist <= _skillRange && (dir.x == 0 || dir.y == 0))
-            {
-                _coolTick = 0;
-                State = CreatureState.Skill;
                 return;
             }
 

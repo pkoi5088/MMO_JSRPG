@@ -59,10 +59,17 @@ namespace Server.Game
             }
 
             // TEMP
-            for(int i = 0; i < 100; ++i)
+            for (int i = 0; i < 5; ++i)
             {
                 Monster monster = ObjectManager.Instance.Add<Monster>();
                 monster.Init(1);
+                EnterGame(monster, randomPos: true);
+            }
+
+            for (int i = 0; i < 5; ++i)
+            {
+                Monster monster = ObjectManager.Instance.Add<Monster>();
+                monster.Init(2);
                 EnterGame(monster, randomPos: true);
             }
         }
@@ -85,7 +92,7 @@ namespace Server.Game
                 {
                     respawnPos.x = _rand.Next(Map.MinX, Map.MaxX + 1);
                     respawnPos.y = _rand.Next(Map.MinY, Map.MaxY + 1);
-                    if (Map.Find(respawnPos) == null)
+                    if (Map.Find(respawnPos) == null && Map.CanGo(respawnPos, true))
                     {
                         gameObject.CellPos = respawnPos;
                         break;

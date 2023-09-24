@@ -195,6 +195,7 @@ message ObjectInfo{
   string name = 2;
   PositionInfo posInfo = 3;
   StatInfo statInfo = 4;
+  int32 templateId = 5;
 }
 
 message PositionInfo{

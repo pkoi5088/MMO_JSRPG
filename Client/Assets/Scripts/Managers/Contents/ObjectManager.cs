@@ -52,13 +52,15 @@ public class ObjectManager
 		}
 		else if (objectType == GameObjectType.Monster)
         {
-            GameObject go = Managers.Resource.Instantiate("Creature/Monster");
+			string monsterName = "Creature/Monster" + info.TemplateId.ToString("00");
+            GameObject go = Managers.Resource.Instantiate(monsterName);
             go.name = info.Name;
             _objects.Add(info.ObjectId, go);
 
             MonsterController mc = go.GetComponent<MonsterController>();
             mc.Id = info.ObjectId;
             mc.PosInfo = info.PosInfo;
+			mc.TemplateId = info.TemplateId;
             mc.Stat.MergeFrom(info.StatInfo);
             mc.SyncPos();
         }
