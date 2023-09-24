@@ -36,7 +36,7 @@ public class UI_Inventory : UI_Base
 
         foreach(Item item in items)
         {
-            if (item.Slot < 0 || item.Slot >= 20)
+            if (item.Slot < 0 || item.Slot >= 16)
                 continue;
 
             Items[item.Slot].SetItem(item);
