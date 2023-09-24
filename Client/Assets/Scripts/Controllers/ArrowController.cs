@@ -12,16 +12,16 @@ public class ArrowController : BaseController
 		switch (Dir)
 		{
 			case MoveDir.Up:
-				transform.rotation = Quaternion.Euler(0, 0, 0);
+				transform.rotation = Quaternion.Euler(0, 0, -90);
 				break;
 			case MoveDir.Down:
-				transform.rotation = Quaternion.Euler(0, 0, -180);
-				break;
-			case MoveDir.Left:
 				transform.rotation = Quaternion.Euler(0, 0, 90);
 				break;
+			case MoveDir.Left:
+				transform.rotation = Quaternion.Euler(0, 0, 0);
+				break;
 			case MoveDir.Right:
-				transform.rotation = Quaternion.Euler(0, 0, -90);
+				transform.rotation = Quaternion.Euler(0, 0, -180);
 				break;
 		}
 
@@ -32,6 +32,12 @@ public class ArrowController : BaseController
 
 	protected override void UpdateAnimation()
 	{
+		if (_animator == null)
+			return;
 
+		if (State == CreatureState.Moving)
+        {
+            _animator.Play("Adogen");
+        }
 	}
 }

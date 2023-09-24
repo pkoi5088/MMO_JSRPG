@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1381780676013921671}
   - component: {fileID: 1381780676013921668}
   m_Layer: 0
-  m_Name: Monster
+  m_Name: Monster02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 7060ca41060b09245865695fdd80104a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e7d4bc25695e87c4eb9a3191a388c616, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 1381780676013921670}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d258ac87278918a448751dd99a02f35f, type: 2}
+  m_Controller: {fileID: 9100000, guid: d900b2c50e85bad469cc6930d52b888a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

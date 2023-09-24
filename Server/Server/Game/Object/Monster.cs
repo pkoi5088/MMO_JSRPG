@@ -111,14 +111,6 @@ namespace Server.Game
                 return;
             }
 
-            // 스킬로 넘어갈지 체크
-            if (dist <= _skillRange && (dir.x == 0 || dir.y == 0))
-            {
-                _coolTick = 0;
-                State = CreatureState.Skill;
-                return;
-            }
-
             // 이동
             Dir = GetDirFromVec(path[1] - CellPos);
             Room.Map.ApplyMove(this, path[1]);

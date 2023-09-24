@@ -6,8 +6,6 @@ using static Define;
 
 public class MonsterController : CreatureController
 {
-	Coroutine _coSkill;
-
 	protected override void Init()
 	{
 		base.Init();
@@ -26,9 +24,17 @@ public class MonsterController : CreatureController
 
     public override void UseSkill(int skillId)
     {
-        if (skillId == 1)
-        {
-			State = CreatureState.Skill;
-        }
+		//if (skillId == 1)
+		//{
+		//	State = CreatureState.Skill;
+		//}
+    }
+
+    protected override void UpdateAnimation()
+    {
+        if (_animator == null || _sprite == null)
+            return;
+
+        _animator.Play("Skull_ghost");
     }
 }
