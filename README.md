@@ -1,5 +1,6 @@
 ﻿# MMO_JSRPG
 C#서버와 유니티로 만든 2D 격자 MMORPG 프로젝트
+> **[[Rookiss - MMO 컨텐츠 구현]](https://www.inflearn.com/course/%EC%9C%A0%EB%8B%88%ED%8B%B0-mmorpg-%EA%B0%9C%EB%B0%9C-part9/dashboard)강의를 보며 진행한 프로젝트**
 
 ## 기간
 * 2023년 7월 4일 ~ 9월 3일: 클라이언트, 서버 연동
